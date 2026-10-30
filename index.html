@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Happy Birthday Anu ❤️</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Sacramento&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    :root {
+      --bg-cream: #faf5ee;
+      --card-bg: #fffdfa;
+      --primary-maroon: #8d2836;
+      --primary-red: #c93b4a;
+      --accent-gold: #c5a059;
+      --text-dark: #3a2e2b;
+      --text-muted: #7d6e68;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    body {
+      background-color: #201716;
+      font-family: 'Poppins', sans-serif;
+      color: var(--text-dark);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .phone-container {
+      width: 100%;
+      max-width: 420px;
+      height: 100vh;
+      max-height: 880px;
+      background: var(--bg-cream);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
+      border-radius: 36px;
+      border: 8px solid #140f0e;
+    }
+
+    @media (max-width: 480px) {
+      .phone-container {
+        height: 100vh;
+        max-height: 100vh;
+        border-radius: 0;
+        border: none;
+      }
+    }
+
+    /* Music Player Button */
+    .music-player-btn {
+      position: absolute;
+      top: 20px;
+      right: 22px;
+      z-index: 100;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #ffffffdd;
+      border: 2px solid var(--primary-maroon);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 17px;
+      transition: all 0.3s;
+    }
+    .music-player-btn.playing {
+      animation: spin 3s linear infinite;
+    }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+
+    /* Screen Elements */
+    .screen {
+      position: absolute;
+      inset: 0;
+      padding: 28px 22px 20px 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(20px) scale(0.98);
+      transition: all 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+      overflow-y: auto;
+      z-index: 10;
+    }
+    .screen.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+      z-index: 20;
+    }
+
+    /* Headings */
+    .title-script {
+      font-family: 'Sacramento', cursive;
+      color: var(--primary-red);
+      font-size: 34px;
+      text-align: center;
+      margin-bottom: 2px;
+    }
+    .title-serif {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      color: var(--primary-maroon);
+      text-align: center;
+      font-weight: 700;
+    }
+    .subtitle-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      color: var(--text-muted);
+      font-size: 16px;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    /* Buttons */
+    .btn-main {
+      width: 100%;
+      max-width: 290px;
+      padding: 13px 20px;
+      background: linear-gradient(135deg, var(--primary-maroon), var(--primary-red));
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(141, 40, 54, 0.28);
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 10px auto;
+    }
+    .btn-main:active { transform: scale(0.96); }
+    .btn-main:disabled { background: #bbb; cursor: not-allowed; box-shadow: none; }
+
+    /* Screen 1: Gift */
+    .gift-box {
+      width: 175px;
+      height: 175px;
+      animation: bounceGift 2.4s ease-in-out infinite;
+      cursor: pointer;
+    }
+    @keyframes bounceGift {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    /* Screen 2: Passcode */
+    .polaroid-top {
+      background: #fff;
+      padding: 8px 8px 24px 8px;
+      border-radius: 6px;
+      box-shadow: 0 10px 22px rgba(0,0,0,0.12);
+      transform: rotate(-2deg);
+      width: 165px;
+      position: relative;
+      margin-bottom: 6px;
+    }
+    .polaroid-top::after {
+      content: 'Happy Birthday Anu';
+      position: absolute;
+      bottom: 4px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-family: 'Sacramento', cursive;
+      font-size: 15px;
+      color: var(--primary-maroon);
+    }
+    .polaroid-top img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+    .code-dots {
+      display: flex;
+      gap: 14px;
+      margin: 10px 0 16px 0;
+    }
+    .code-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 1.5px solid var(--accent-gold);
+      transition: all 0.2s;
+    }
+    .code-dot.filled {
+      background: var(--primary-maroon);
+      border-color: var(--primary-maroon);
+      transform: scale(1.15);
+    }
+    .keypad-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      width: 250px;
+    }
+    .key-btn {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      border: 1px solid #ebdac9;
+      background: #ffffffbb;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+    }
+
+    /* Screen 3: Balloons */
+    .balloons-area {
+      width: 100%;
+      height: 310px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .balloon-item {
+      width: 85px;
+      height: 105px;
+      border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+      position: relative;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset -5px -5px 10px rgba(0,0,0,0.1), 0 8px 16px rgba(0,0,0,0.08);
+      animation: floatBal 3s ease-in-out infinite alternate;
+    }
+    @keyframes floatBal {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-15px); }
+    }
+    .balloon-words {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      color: var(--primary-maroon);
+      font-weight: 700;
+      text-align: center;
+      height: 45px;
+    }
+
+    /* Screen 4: Cake Cutting */
+    .cake-wrapper {
+      position: relative;
+      width: 240px;
+      height: 220px;
+      margin: 10px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .candle-flames {
+      position: absolute;
+      top: 24px;
+      display: flex;
+      gap: 22px;
+    }
+    .flame {
+      width: 10px;
+      height: 16px;
+      background: radial-gradient(circle, #fff972 20%, #ff7300 80%);
+      border-radius: 50% 50% 20% 20%;
+      cursor: pointer;
+      animation: flick 0.6s infinite alternate;
+      box-shadow: 0 0 10px #ff9400;
+    }
+    .flame.off { display: none; }
+    @keyframes flick { 0% { transform: scale(1); } 100% { transform: scale(1.15); } }
+    .knife-drag-line {
+      position: absolute;
+      top: 58%;
+      left: 15%;
+      width: 70%;
+      height: 35px;
+      border-bottom: 2px dashed var(--primary-red);
+      display: none;
+      align-items: center;
+      cursor: pointer;
+    }
+    .knife-icon {
+      font-size: 24px;
+      position: absolute;
+      left: 0;
+      transition: left 0.3s;
+    }
+
+    /* Screen 5: Camera */
+    .camera-body {
+      width: 195px;
+      height: 165px;
+      background: #735041;
+      border-radius: 20px;
+      border: 4px solid #452e24;
+      position: relative;
+      box-shadow: 0 14px 28px rgba(0,0,0,0.22);
+      cursor: pointer;
+      margin: 15px auto;
+    }
+    .camera-lens {
+      width: 85px;
+      height: 85px;
+      border-radius: 50%;
+      background: #241c19;
+      border: 7px solid #c29f74;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .ejected-photo-slot {
+      position: absolute;
+      bottom: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 135px;
+      height: 155px;
+      background: #fff;
+      padding: 6px 6px 18px 6px;
+      border-radius: 4px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+      z-index: -1;
+      opacity: 0;
+    }
+    .ejected-photo-slot.ejected {
+      transform: translateX(-50%) translateY(140px);
+      opacity: 1;
+      z-index: 10;
+    }
+    .ejected-photo-slot img {
+      width: 100%;
+      height: 115px;
+      object-fit: cover;
+    }
+
+    /* Screen 6: Scrapbook Wall (Couple & Single Moments) */
+    .scrapbook-wall {
+      width: 100%;
+      height: 480px;
+      overflow-y: auto;
+      padding: 10px 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+    }
+    .scrap-item {
+      background: #fff;
+      padding: 10px 10px 22px 10px;
+      border-radius: 5px;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.1);
+      width: 90%;
+    }
+    .scrap-item img {
+      width: 100%;
+      height: 230px;
+      object-fit: cover;
+      border-radius: 3px;
+    }
+    .scrap-caption {
+      font-family: 'Sacramento', cursive;
+      font-size: 20px;
+      text-align: center;
+      margin-top: 6px;
+      color: var(--primary-maroon);
+    }
+
+    /* Screen 7: Wax Envelopes */
+    .envelope-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      width: 100%;
+      margin: 10px 0;
+    }
+    .envelope-card {
+      background: #f4eae0;
+      border: 1px solid #e1cebc;
+      border-radius: 8px;
+      height: 110px;
+      position: relative;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 5px 12px rgba(0,0,0,0.06);
+    }
+    .wax-seal {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--primary-red);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+    .letter-modal {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 22px;
+      backdrop-filter: blur(3px);
+    }
+    .letter-card {
+      background: #fffefb;
+      padding: 24px 18px;
+      border-radius: 12px;
+      border-top: 4px solid var(--primary-maroon);
+      text-align: center;
+      width: 100%;
+      position: relative;
+    }
+
+    /* Screen 8: Quiz */
+    .quiz-card {
+      background: #fff;
+      padding: 20px 16px;
+      border-radius: 14px;
+      width: 100%;
+      border: 1px solid #ebd9c8;
+    }
+    .quiz-opt {
+      width: 100%;
+      padding: 13px 16px;
+      margin: 8px 0;
+      border-radius: 25px;
+      border: 1px solid #ded0c1;
+      background: var(--card-bg);
+      text-align: left;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .quiz-opt.correct {
+      background: #d4edda;
+      border-color: #28a745;
+      color: #155724;
+      font-weight: 600;
+    }
+
+    /* Screen 9: Flip & Match */
+    .memory-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      width: 100%;
+      margin: 10px 0;
+    }
+    .memo-card {
+      height: 65px;
+      background: #fdf5ec;
+      border: 1.5px solid #dfc7b0;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      cursor: pointer;
+    }
+    .memo-card.flipped { background: #fff; border-color: var(--primary-maroon); }
+    .memo-card.matched { background: #fae4e6; border-color: var(--primary-red); cursor: default; }
+
+    /* Screen 10: Scratch Card */
+    .scratch-container {
+      position: relative;
+      width: 255px;
+      height: 255px;
+      margin: 15px auto;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+      border: 4px solid #fff;
+    }
+    .scratch-underlay {
+      position: absolute;
+      inset: 0;
+      background: #fffdf8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      text-align: center;
+    }
+    .scratch-underlay img {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--accent-gold);
+      margin-bottom: 10px;
+    }
+    .scratch-shayari {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--primary-maroon);
+      line-height: 1.4;
+    }
+    #scratchCanvas {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      touch-action: none;
+    }
+
+    /* Screen 11: Cinematic Story Slideshow */
+    .video-reel-frame {
+      width: 100%;
+      height: 480px;
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      background: #000;
+    }
+    .slide-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transform: scale(1.06);
+      transition: all 1.8s ease-in-out;
+    }
+    .slide-photo.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .reel-overlay {
+      position: absolute;
+      bottom: 0;
+      inset-x: 0;
+      padding: 30px 18px 20px 18px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.85));
+      color: #fff;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="phone-container">
+    <!-- Music Button -->
+    <button class="music-player-btn" id="musicBtn" onclick="toggleAudio()">🎵</button>
+
+    <!-- Background Song: Enna Karda Tu Pyar Bhi Ni Karda -->
+    <audio id="bgSong" loop preload="auto">
+      <source src="Enna_Karda_Tu_Pyar_Bhi_Ni_Karda.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- ================= SCREEN 1: GIFT BOX ================= -->
+    <div class="screen active" id="screen1">
+      <div>
+        <p class="title-script">Something Special</p>
+        <h1 class="title-serif">For You, Anu ❤️</h1>
+        <p class="subtitle-text">A little birthday surprise awaits 🎀</p>
+      </div>
+
+      <div class="gift-box" onclick="nextScreen(2)">
+        <svg viewBox="0 0 200 200" fill="none">
+          <rect x="35" y="70" width="130" height="95" rx="8" fill="#9e2837"/>
+          <rect x="25" y="55" width="150" height="24" rx="4" fill="#ba3346"/>
+          <rect x="90" y="55" width="20" height="110" fill="#e5bf73"/>
+          <path d="M100 55 C80 20, 45 35, 75 55 Z" fill="#e5bf73"/>
+          <path d="M100 55 C120 20, 155 35, 125 55 Z" fill="#e5bf73"/>
+          <circle cx="100" cy="55" r="9" fill="#d4a34b"/>
+        </svg>
+      </div>
+
+      <button class="btn-main" onclick="nextScreen(2)">Let's Begin ➔</button>
+    </div>
+
+    <!-- ================= SCREEN 2: PASSCODE (CODE: 0411) ================= -->
+    <div class="screen" id="screen2">
+      <!-- Polaroid Photo 1 -->
+      <div class="polaroid-top">
+        <img src="1000068636.jpg" alt="Anu">
+      </div>
+
+      <div>
+        <h2 class="title-serif" style="font-size: 21px;">Enter Your Secret Code</h2>
+        <p class="subtitle-text">Your Birthday Date (0411) 🔒</p>
+        
+        <div class="code-dots" id="dotsContainer">
+          <div class="code-dot"></div>
+          <div class="code-dot"></div>
+          <div class="code-dot"></div>
+          <div class="code-dot"></div>
+        </div>
+      </div>
+
+      <div class="keypad-grid">
+        <button class="key-btn" onclick="pressKey('1')">1</button>
+        <button class="key-btn" onclick="pressKey('2')">2</button>
+        <button class="key-btn" onclick="pressKey('3')">3</button>
+        <button class="key-btn" onclick="pressKey('4')">4</button>
+        <button class="key-btn" onclick="pressKey('5')">5</button>
+        <button class="key-btn" onclick="pressKey('6')">6</button>
+        <button class="key-btn" onclick="pressKey('7')">7</button>
+        <button class="key-btn" onclick="pressKey('8')">8</button>
+        <button class="key-btn" onclick="pressKey('9')">9</button>
+        <button class="key-btn" onclick="clearKeys()">⌫</button>
+        <button class="key-btn" onclick="pressKey('0')">0</button>
+        <button class="key-btn" onclick="submitPasscode()">❤️</button>
+      </div>
+      <div style="height: 10px;"></div>
+    </div>
+
+    <!-- ================= SCREEN 3: POP BALLOONS ================= -->
+    <div class="screen" id="screen3">
+      <div>
+        <h2 class="title-serif">Pop the Balloons! 🎈</h2>
+        <p class="subtitle-text">Tap balloons to reveal message for Anu</p>
+      </div>
+
+      <div class="balloons-area">
+        <div class="balloon-item" style="background: #f7a8b8; color:#f7a8b8;" onclick="popBalloon(this, 'You')">
+          <span style="font-size: 26px;">🎈</span>
+        </div>
+        <div class="balloon-item" style="background: #fed18c; color:#fed18c;" onclick="popBalloon(this, 'Are')">
+          <span style="font-size: 26px;">🎈</span>
+        </div>
+        <div class="balloon-item" style="background: #b5e2fa; color:#b5e2fa;" onclick="popBalloon(this, 'So')">
+          <span style="font-size: 26px;">🎈</span>
+        </div>
+        <div class="balloon-item" style="background: #edafb8; color:#edafb8;" onclick="popBalloon(this, 'Special Anu ❤️')">
+          <span style="font-size: 26px;">🎈</span>
+        </div>
+      </div>
+
+      <div class="balloon-words" id="balloonMsg"></div>
+
+      <button class="btn-main" id="balloonNextBtn" disabled onclick="nextScreen(4)">Cut The Cake ➔</button>
+    </div>
+
+    <!-- ================= SCREEN 4: CAKE CUTTING (TEXT: BACHA) ================= -->
+    <div class="screen" id="screen4">
+      <div>
+        <p class="title-script">Make a sweet wish...</p>
+        <h2 class="title-serif">Happy Birthday Bacha 🎂</h2>
+        <p class="subtitle-text" id="cakeInstruction">Tap candle flames to blow them out!</p>
+      </div>
+
+      <div class="cake-wrapper">
+        <svg viewBox="0 0 200 160" style="width: 100%;">
+          <ellipse cx="100" cy="130" rx="80" ry="22" fill="#d1b89d"/>
+          <path d="M35 85 C35 85, 35 125, 100 125 C165 125, 165 85, 165 85 L165 65 C165 65, 165 105, 100 105 C35 105, 35 65, 35 65 Z" fill="#fff"/>
+          <ellipse cx="100" cy="65" rx="65" ry="18" fill="#fce4ec"/>
+          <path d="M35 65 C35 65, 60 85, 80 68 C100 88, 120 70, 140 85 C160 70, 165 65, 165 65" stroke="#f48fb1" stroke-width="6" fill="none"/>
+          <text x="100" y="105" text-anchor="middle" font-family="'Sacramento', cursive" font-size="19" fill="#9e2837">Happy Birthday Bacha ❤️</text>
+          <rect x="70" y="32" width="6" height="25" fill="#f8bbd0"/>
+          <rect x="97" y="28" width="6" height="29" fill="#f8bbd0"/>
+          <rect x="124" y="32" width="6" height="25" fill="#f8bbd0"/>
+        </svg>
+
+        <div class="candle-flames">
+          <div class="flame" onclick="blowFlame(this)"></div>
+          <div class="flame" onclick="blowFlame(this)"></div>
+          <div class="flame" onclick="blowFlame(this)"></div>
+        </div>
+
+   
