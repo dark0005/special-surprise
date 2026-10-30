@@ -63,7 +63,6 @@
       }
     }
 
-    /* Music Player Button */
     .music-player-btn {
       position: absolute;
       top: 20px;
@@ -82,12 +81,9 @@
       font-size: 17px;
       transition: all 0.3s;
     }
-    .music-player-btn.playing {
-      animation: spin 3s linear infinite;
-    }
+    .music-player-btn.playing { animation: spin 3s linear infinite; }
     @keyframes spin { 100% { transform: rotate(360deg); } }
 
-    /* Screen Elements */
     .screen {
       position: absolute;
       inset: 0;
@@ -110,7 +106,6 @@
       z-index: 20;
     }
 
-    /* Headings */
     .title-script {
       font-family: 'Sacramento', cursive;
       color: var(--primary-red);
@@ -134,7 +129,6 @@
       margin-bottom: 12px;
     }
 
-    /* Buttons */
     .btn-main {
       width: 100%;
       max-width: 290px;
@@ -146,20 +140,16 @@
       font-family: 'Playfair Display', serif;
       font-size: 16px;
       font-weight: 600;
-      letter-spacing: 0.5px;
       cursor: pointer;
       box-shadow: 0 8px 20px rgba(141, 40, 54, 0.28);
-      transition: all 0.25s ease;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
       margin: 10px auto;
     }
     .btn-main:active { transform: scale(0.96); }
     .btn-main:disabled { background: #bbb; cursor: not-allowed; box-shadow: none; }
 
-    /* Screen 1: Gift */
     .gift-box {
       width: 175px;
       height: 175px;
@@ -171,7 +161,6 @@
       50% { transform: translateY(-12px); }
     }
 
-    /* Screen 2: Passcode */
     .polaroid-top {
       background: #fff;
       padding: 8px 8px 24px 8px;
@@ -199,17 +188,12 @@
       object-fit: cover;
       border-radius: 4px;
     }
-    .code-dots {
-      display: flex;
-      gap: 14px;
-      margin: 10px 0 16px 0;
-    }
+    .code-dots { display: flex; gap: 14px; margin: 10px 0 16px 0; }
     .code-dot {
       width: 14px;
       height: 14px;
       border-radius: 50%;
       border: 1.5px solid var(--accent-gold);
-      transition: all 0.2s;
     }
     .code-dot.filled {
       background: var(--primary-maroon);
@@ -238,7 +222,6 @@
       margin: 0 auto;
     }
 
-    /* Screen 3: Balloons */
     .balloons-area {
       width: 100%;
       height: 310px;
@@ -272,7 +255,6 @@
       height: 45px;
     }
 
-    /* Screen 4: Cake Cutting */
     .cake-wrapper {
       position: relative;
       width: 240px;
@@ -282,12 +264,7 @@
       align-items: center;
       justify-content: center;
     }
-    .candle-flames {
-      position: absolute;
-      top: 24px;
-      display: flex;
-      gap: 22px;
-    }
+    .candle-flames { position: absolute; top: 24px; display: flex; gap: 22px; }
     .flame {
       width: 10px;
       height: 16px;
@@ -310,14 +287,8 @@
       align-items: center;
       cursor: pointer;
     }
-    .knife-icon {
-      font-size: 24px;
-      position: absolute;
-      left: 0;
-      transition: left 0.3s;
-    }
+    .knife-icon { font-size: 24px; position: absolute; left: 0; transition: left 0.3s; }
 
-    /* Screen 5: Camera */
     .camera-body {
       width: 195px;
       height: 165px;
@@ -360,13 +331,8 @@
       opacity: 1;
       z-index: 10;
     }
-    .ejected-photo-slot img {
-      width: 100%;
-      height: 115px;
-      object-fit: cover;
-    }
+    .ejected-photo-slot img { width: 100%; height: 115px; object-fit: cover; }
 
-    /* Screen 6: Scrapbook Wall (Couple & Single Moments) */
     .scrapbook-wall {
       width: 100%;
       height: 480px;
@@ -384,12 +350,7 @@
       box-shadow: 0 8px 18px rgba(0,0,0,0.1);
       width: 90%;
     }
-    .scrap-item img {
-      width: 100%;
-      height: 230px;
-      object-fit: cover;
-      border-radius: 3px;
-    }
+    .scrap-item img { width: 100%; height: 230px; object-fit: cover; border-radius: 3px; }
     .scrap-caption {
       font-family: 'Sacramento', cursive;
       font-size: 20px;
@@ -398,7 +359,6 @@
       color: var(--primary-maroon);
     }
 
-    /* Screen 7: Wax Envelopes */
     .envelope-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -450,7 +410,6 @@
       position: relative;
     }
 
-    /* Screen 8: Quiz */
     .quiz-card {
       background: #fff;
       padding: 20px 16px;
@@ -476,7 +435,6 @@
       font-weight: 600;
     }
 
-    /* Screen 9: Flip & Match */
     .memory-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -498,7 +456,6 @@
     .memo-card.flipped { background: #fff; border-color: var(--primary-maroon); }
     .memo-card.matched { background: #fae4e6; border-color: var(--primary-red); cursor: default; }
 
-    /* Screen 10: Scratch Card */
     .scratch-container {
       position: relative;
       width: 255px;
@@ -535,14 +492,8 @@
       color: var(--primary-maroon);
       line-height: 1.4;
     }
-    #scratchCanvas {
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-      touch-action: none;
-    }
+    #scratchCanvas { position: absolute; inset: 0; z-index: 2; touch-action: none; }
 
-    /* Screen 11: Cinematic Story Slideshow */
     .video-reel-frame {
       width: 100%;
       height: 480px;
@@ -561,10 +512,7 @@
       transform: scale(1.06);
       transition: all 1.8s ease-in-out;
     }
-    .slide-photo.active {
-      opacity: 1;
-      transform: scale(1);
-    }
+    .slide-photo.active { opacity: 1; transform: scale(1); }
     .reel-overlay {
       position: absolute;
       bottom: 0;
@@ -579,16 +527,14 @@
 <body>
 
   <div class="phone-container">
-    <!-- Music Button -->
     <button class="music-player-btn" id="musicBtn" onclick="toggleAudio()">🎵</button>
 
-    <!-- Background Song: Enna Karda Tu Pyar Bhi Ni Karda -->
+    <!-- Uploaded Song Name -->
     <audio id="bgSong" loop preload="auto">
-  <source src="Sohnea (Full Song) Miss Pooja Feat. Millind Gaba Happy Raikoti Superhit Punjabi Song - Speed Records.mp3" type="audio/mpeg">
+      <source src="Sohnea (Full Song) Miss Pooja Feat. Millind Gaba Happy Raikoti Superhit Punjabi Song - Speed Records.mp3" type="audio/mpeg">
     </audio>
-    
 
-    <!-- ================= SCREEN 1: GIFT BOX ================= -->
+    <!-- SCREEN 1: GIFT BOX -->
     <div class="screen active" id="screen1">
       <div>
         <p class="title-script">Something Special</p>
@@ -610,11 +556,10 @@
       <button class="btn-main" onclick="nextScreen(2)">Let's Begin ➔</button>
     </div>
 
-    <!-- ================= SCREEN 2: PASSCODE (CODE: 0411) ================= -->
+    <!-- SCREEN 2: PASSCODE (0411) -->
     <div class="screen" id="screen2">
-      <!-- Polaroid Photo 1 -->
       <div class="polaroid-top">
-        <img src="1000068636.jpg" alt="Anu">
+        <img src="IMG_20261030_135722.jpg" alt="Anu" onerror="this.src='1793348229083.png'">
       </div>
 
       <div>
@@ -646,7 +591,7 @@
       <div style="height: 10px;"></div>
     </div>
 
-    <!-- ================= SCREEN 3: POP BALLOONS ================= -->
+    <!-- SCREEN 3: BALLOONS -->
     <div class="screen" id="screen3">
       <div>
         <h2 class="title-serif">Pop the Balloons! 🎈</h2>
@@ -654,26 +599,17 @@
       </div>
 
       <div class="balloons-area">
-        <div class="balloon-item" style="background: #f7a8b8; color:#f7a8b8;" onclick="popBalloon(this, 'You')">
-          <span style="font-size: 26px;">🎈</span>
-        </div>
-        <div class="balloon-item" style="background: #fed18c; color:#fed18c;" onclick="popBalloon(this, 'Are')">
-          <span style="font-size: 26px;">🎈</span>
-        </div>
-        <div class="balloon-item" style="background: #b5e2fa; color:#b5e2fa;" onclick="popBalloon(this, 'So')">
-          <span style="font-size: 26px;">🎈</span>
-        </div>
-        <div class="balloon-item" style="background: #edafb8; color:#edafb8;" onclick="popBalloon(this, 'Special Anu ❤️')">
-          <span style="font-size: 26px;">🎈</span>
-        </div>
+        <div class="balloon-item" style="background: #f7a8b8; color:#f7a8b8;" onclick="popBalloon(this, 'You')"><span style="font-size: 26px;">🎈</span></div>
+        <div class="balloon-item" style="background: #fed18c; color:#fed18c;" onclick="popBalloon(this, 'Are')"><span style="font-size: 26px;">🎈</span></div>
+        <div class="balloon-item" style="background: #b5e2fa; color:#b5e2fa;" onclick="popBalloon(this, 'So')"><span style="font-size: 26px;">🎈</span></div>
+        <div class="balloon-item" style="background: #edafb8; color:#edafb8;" onclick="popBalloon(this, 'Special Anu ❤️')"><span style="font-size: 26px;">🎈</span></div>
       </div>
 
       <div class="balloon-words" id="balloonMsg"></div>
-
       <button class="btn-main" id="balloonNextBtn" disabled onclick="nextScreen(4)">Cut The Cake ➔</button>
     </div>
 
-    <!-- ================= SCREEN 4: CAKE CUTTING (TEXT: BACHA) ================= -->
+    <!-- SCREEN 4: CAKE CUTTING -->
     <div class="screen" id="screen4">
       <div>
         <p class="title-script">Make a sweet wish...</p>
@@ -699,4 +635,27 @@
           <div class="flame" onclick="blowFlame(this)"></div>
         </div>
 
-   
+        <div class="knife-drag-line" id="knifeLine" onclick="cutCakeAuto()">
+          <span class="knife-icon" id="knifeIcon">🔪 Tap to cut!</span>
+        </div>
+      </div>
+
+      <button class="btn-main" id="cakeNextBtn" disabled onclick="nextScreen(5)">Capture Memory ➔</button>
+    </div>
+
+    <!-- SCREEN 5: CAMERA REVEAL -->
+    <div class="screen" id="screen5">
+      <div>
+        <h2 class="title-serif">Capture a Moment 📷</h2>
+        <p class="subtitle-text">Tap the camera to develop the photo</p>
+      </div>
+
+      <div style="position: relative; margin-top: 15px;">
+        <div class="camera-body" onclick="ejectPhoto()"><div class="camera-lens"></div></div>
+        <div class="ejected-photo-slot" id="ejectedSlot">
+          <img src="IMG-20251218-WA0001.jpg" alt="Anu Terrace Photo" onerror="this.src='1793348229083.png'">
+        </div>
+      </div>
+
+      <div style="height: 120px;"></div>
+      <button class="btn-main" id="camNextBtn" disabled onclick="
