@@ -241,17 +241,18 @@
       min-height: 40px;
     }
 
+    /* CAKE CUTTING DRAG MECHANISM */
     .cake-wrapper {
       position: relative;
-      width: 240px;
-      height: 220px;
+      width: 260px;
+      height: 240px;
       margin: 10px auto;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
     }
-    .candle-flames { position: absolute; top: 15px; display: flex; gap: 22px; }
+    .candle-flames { position: absolute; top: 12px; display: flex; gap: 24px; z-index: 5; }
     .flame {
       width: 12px;
       height: 18px;
@@ -263,6 +264,51 @@
     }
     .flame.off { display: none; }
     @keyframes flick { 0% { transform: scale(1); } 100% { transform: scale(1.15); } }
+
+    .cut-line-track {
+      position: absolute;
+      top: 45px;
+      width: 6px;
+      height: 130px;
+      border-left: 2px dashed var(--primary-red);
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      z-index: 20;
+    }
+    .draggable-knife {
+      position: absolute;
+      top: 0;
+      left: -22px;
+      width: 44px;
+      height: 44px;
+      background: #fff;
+      border: 2px solid var(--primary-maroon);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      cursor: grab;
+      touch-action: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    }
+    .draggable-knife:active { cursor: grabbing; transform: scale(1.1); }
+
+    .cake-slice-piece {
+      position: absolute;
+      top: 85px;
+      right: 48px;
+      width: 48px;
+      height: 52px;
+      display: none;
+      transition: all 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 10;
+    }
+    .cake-slice-piece.popped {
+      display: block;
+      transform: translate(35px, 20px) rotate(22deg);
+    }
 
     .camera-body {
       width: 195px;
@@ -308,6 +354,7 @@
     }
     .ejected-photo-slot img { width: 100%; height: 120px; object-fit: cover; }
 
+    /* UNCROPPED SCRAPBOOK PHOTOS */
     .scrapbook-wall {
       width: 100%;
       height: 480px;
@@ -328,7 +375,7 @@
     .scrap-item img {
       width: 100%;
       height: auto;
-      max-height: 360px;
+      max-height: 380px;
       object-fit: contain;
       border-radius: 4px;
       background: #fafafa;
@@ -379,17 +426,39 @@
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 22px;
-      backdrop-filter: blur(3px);
+      padding: 20px;
+      backdrop-filter: blur(4px);
     }
     .letter-card {
       background: #fffefb;
       padding: 24px 18px;
-      border-radius: 12px;
-      border-top: 4px solid var(--primary-maroon);
+      border-radius: 14px;
+      border-top: 5px solid var(--primary-maroon);
       text-align: center;
       width: 100%;
       position: relative;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+    }
+
+    /* BADA PERSONAL NOTE CARD */
+    .grand-letter-box {
+      background: #fffdf9;
+      border: 2px solid #ebdac7;
+      border-radius: 16px;
+      padding: 22px 18px;
+      width: 100%;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+      position: relative;
+    }
+    .grand-letter-box::before {
+      content: '💌';
+      font-size: 26px;
+      position: absolute;
+      top: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #faf5ee;
+      padding: 0 10px;
     }
 
     .quiz-card {
@@ -512,7 +581,10 @@
   <div class="phone-container">
     <button class="music-player-btn" id="musicBtn" onclick="toggleAudio()">🎵</button>
 
-    <audio id="bgSong" loop preload="auto" src="Sohnea (Full Song) Miss Pooja Feat. Millind Gaba Happy Raikoti Superhit Punjabi Song - Speed Records.mp3"></audio>
+    <!-- Clean Audio Tag pointing to Sohnea.mp3 -->
+    <audio id="bgSong" loop preload="auto">
+      <source src="Sohnea.mp3" type="audio/mpeg">
+    </audio>
 
     <!-- SCREEN 1: GIFT BOX -->
     <div class="screen active" id="screen1">
@@ -589,12 +661,12 @@
       <button type="button" class="btn-main" id="balloonNextBtn" disabled onclick="goToScreen(4)">Cut The Cake ➔</button>
     </div>
 
-    <!-- SCREEN 4: CAKE CUTTING -->
+    <!-- SCREEN 4: CAKE CUTTING (KNIFE DRAG + SLICE MECHANISM) -->
     <div class="screen" id="screen4">
       <div>
         <p class="title-script">Make a sweet wish...</p>
         <h2 class="title-serif">Happy Birthday Bacha 🎂</h2>
-        <p class="subtitle-text" id="cakeInstruction">Tap candle flames to blow them out!</p>
+        <p class="subtitle-text" id="cakeInstruction">Tap all 3 candles to blow them out!</p>
       </div>
 
       <div class="cake-wrapper">
@@ -604,9 +676,16 @@
           <ellipse cx="100" cy="65" rx="65" ry="18" fill="#fce4ec"/>
           <path d="M35 65 C35 65, 60 85, 80 68 C100 88, 120 70, 140 85 C160 70, 165 65, 165 65" stroke="#f48fb1" stroke-width="6" fill="none"/>
           <text x="100" y="105" text-anchor="middle" font-family="'Sacramento', cursive" font-size="19" fill="#9e2837">Happy Birthday Bacha ❤️</text>
-          <rect x="70" y="32" width="6" height="25" fill="#f8bbd0"/>
-          <rect x="97" y="28" width="6" height="29" fill="#f8bbd0"/>
-          <rect x="124" y="32" width="6" height="25" fill="#f8bbd0"/>
+          <rect x="70" y="28" width="6" height="25" fill="#f8bbd0"/>
+          <rect x="97" y="24" width="6" height="29" fill="#f8bbd0"/>
+          <rect x="124" y="28" width="6" height="25" fill="#f8bbd0"/>
+        </svg>
+
+        <!-- Cake Slice Piece that pops out -->
+        <svg class="cake-slice-piece" id="cakeSlice" viewBox="0 0 60 60">
+          <path d="M5 25 L45 5 L55 35 L15 55 Z" fill="#fce4ec" stroke="#f48fb1" stroke-width="2"/>
+          <path d="M15 55 L55 35 L55 45 L15 65 Z" fill="#ba3346"/>
+          <circle cx="35" cy="22" r="5" fill="#ff4d6d"/>
         </svg>
 
         <div class="candle-flames">
@@ -614,9 +693,13 @@
           <div class="flame" onclick="blowFlame(this)"></div>
           <div class="flame" onclick="blowFlame(this)"></div>
         </div>
+
+        <!-- Vertical Drag Line & Knife -->
+        <div class="cut-line-track" id="cutTrack">
+          <div class="draggable-knife" id="dragKnife">🔪</div>
+        </div>
       </div>
 
-      <button type="button" class="btn-main" id="cakeCutTriggerBtn" style="display:none;" onclick="triggerCakeCut()">🔪 Tap Here to Cut Cake!</button>
       <button type="button" class="btn-main" id="cakeNextBtn" disabled onclick="goToScreen(5)">Capture Memory ➔</button>
     </div>
 
@@ -637,7 +720,8 @@
       <div style="height: 120px;"></div>
       <button type="button" class="btn-main" id="camNextBtn" disabled onclick="goToScreen(6)">Beautiful Memories ➔</button>
     </div>
-        <!-- SCREEN 6: SCRAPBOOK GALLERY -->
+
+    <!-- SCREEN 6: SCRAPBOOK GALLERY -->
     <div class="screen" id="screen6">
       <div>
         <p class="title-script">Special Moments</p>
@@ -646,7 +730,7 @@
       </div>
 
       <div class="scrapbook-wall">
-        <!-- White Shirt Photo Added -->
+        <!-- White Shirt Couple Photo -->
         <div class="scrap-item" style="transform: rotate(-1deg);">
           <img src="file_000000008e0482118a72021cfe78b87f.png" alt="Together White Shirt">
           <p class="scrap-caption">The favorite frame ✨</p>
@@ -698,10 +782,10 @@
         <div class="envelope-card" onclick="openLetter(4)"><div class="wax-seal">🕊️</div></div>
       </div>
 
-      <button type="button" class="btn-main" onclick="goToScreen(8)">Fun Quiz ➔</button>
+      <button type="button" class="btn-main" onclick="goToScreen(8)">Read My Full Letter ➔</button>
     </div>
 
-    <!-- Letter Modal -->
+    <!-- Letter Modal (Pop-up) -->
     <div class="letter-modal" id="letterModal">
       <div class="letter-card">
         <span style="position: absolute; top: 10px; right: 14px; font-size: 22px; cursor: pointer;" onclick="closeLetter()">&times;</span>
@@ -711,8 +795,29 @@
       </div>
     </div>
 
-    <!-- SCREEN 8: QUIZ -->
+    <!-- SCREEN 8: BADA PERSONAL NOTE (DEAR ANU + PRINCE) -->
     <div class="screen" id="screen8">
+      <div>
+        <p class="title-script">Directly from the Heart</p>
+        <h2 class="title-serif">A Letter For You 🌹</h2>
+      </div>
+
+      <div class="grand-letter-box">
+        <p style="font-family: 'Sacramento', cursive; font-size: 32px; color: var(--primary-maroon); text-align: left; margin-bottom: 8px;">Dear Anu,</p>
+        <p style="font-family: 'Cormorant Garamond', serif; font-size: 18px; line-height: 1.6; color: var(--text-dark); text-align: justify;">
+          Happy Birthday bacha! Tum meri zindagi ka wo hissa ho jiske bina meri har ek muskurahat adhoori lagti hai. Jab bhi tum hansti ho, aaspas ki saari pareshaniyan bilkul gayab ho jati hain. Khuda kare yeh aane wala saal tumhari zindagi mein itna sukoon aur khushiyan bhar de jitni tum deserve karti ho. Chahe halaat jo bhi ho, mera saath tumhare saath hamesha aise hi rahega. Always stay happy, smiling and blessed!
+        </p>
+        <div style="text-align: right; margin-top: 18px;">
+          <p style="font-family: 'Sacramento', cursive; font-size: 26px; color: var(--primary-red);">Forever & Always,</p>
+          <p style="font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--primary-maroon);">— Prince ❤️</p>
+        </div>
+      </div>
+
+      <button type="button" class="btn-main" onclick="goToScreen(9)">Fun Quiz ➔</button>
+    </div>
+
+    <!-- SCREEN 9: QUIZ -->
+    <div class="screen" id="screen9">
       <div>
         <p class="title-script">How Well Do You Know?</p>
         <h2 class="title-serif">Where Did We First Meet? 💫</h2>
@@ -726,11 +831,11 @@
         <button type="button" class="quiz-opt" onclick="checkQuiz(this, false)">D) In a Cafe</button>
       </div>
 
-      <button type="button" class="btn-main" id="quizNextBtn" disabled onclick="goToScreen(9)">Memory Game ➔</button>
+      <button type="button" class="btn-main" id="quizNextBtn" disabled onclick="goToScreen(10)">Memory Game ➔</button>
     </div>
 
-    <!-- SCREEN 9: FLIP & MATCH -->
-    <div class="screen" id="screen9">
+    <!-- SCREEN 10: FLIP & MATCH -->
+    <div class="screen" id="screen10">
       <div>
         <p class="title-script">Mini Game</p>
         <h2 class="title-serif">Flip & Match 🃏</h2>
@@ -738,11 +843,11 @@
       </div>
 
       <div class="memory-grid" id="memoGrid"></div>
-      <button type="button" class="btn-main" id="matchNextBtn" disabled onclick="goToScreen(10)">Scratch Surprise ➔</button>
+      <button type="button" class="btn-main" id="matchNextBtn" disabled onclick="goToScreen(11)">Scratch Surprise ➔</button>
     </div>
 
-    <!-- SCREEN 10: SCRATCH CARD -->
-    <div class="screen" id="screen10">
+    <!-- SCREEN 11: SCRATCH CARD -->
+    <div class="screen" id="screen11">
       <div>
         <p class="title-script">It's Your Birthday!</p>
         <h2 class="title-serif">Scratch Your Surprise 🎁</h2>
@@ -760,11 +865,11 @@
         <canvas id="scratchCanvas" width="255" height="255"></canvas>
       </div>
 
-      <button type="button" class="btn-main" id="scratchNextBtn" disabled onclick="goToScreen(11)">Play Love Reel ➔</button>
+      <button type="button" class="btn-main" id="scratchNextBtn" disabled onclick="goToScreen(12)">Play Love Reel ➔</button>
     </div>
 
-    <!-- SCREEN 11: CINEMATIC SLIDESHOW -->
-    <div class="screen" id="screen11">
+    <!-- SCREEN 12: CINEMATIC SLIDESHOW -->
+    <div class="screen" id="screen12">
       <div>
         <p class="title-script">Forever & Always</p>
         <h2 class="title-serif">Happy Birthday, Anu! ❤️</h2>
@@ -820,6 +925,10 @@
       }
     }
 
+    document.addEventListener('click', function() {
+      if (!isPlaying) startMusicForce();
+    }, { once: false });
+
     function goToScreen(n) {
       startMusicForce();
       var all = document.getElementsByClassName('screen');
@@ -830,8 +939,8 @@
       if (target) {
         target.classList.add('active');
       }
-      if (n === 10) initScratch();
-      if (n === 11) startSlideshow();
+      if (n === 11) initScratch();
+      if (n === 12) startSlideshow();
     }
 
     var enteredCode = "";
@@ -880,6 +989,7 @@
       }
     }
 
+    /* CANDLE BLOW & KNIFE DRAG LOGIC */
     var blownFlames = 0;
     function blowFlame(f) {
       if (f.classList.contains('off')) return;
@@ -887,20 +997,57 @@
       blownFlames++;
       if (blownFlames >= 3) {
         var cInst = document.getElementById('cakeInstruction');
-        if (cInst) cInst.innerText = "Wish Granted! Ab neeche cake cut karo 🍰";
-        var cutBtn = document.getElementById('cakeCutTriggerBtn');
-        if (cutBtn) cutBtn.style.display = 'flex';
+        if (cInst) cInst.innerText = "Wish Granted! Drag knife down to cut cake 🔪";
+        var track = document.getElementById('cutTrack');
+        if (track) track.style.display = 'flex';
+        initKnifeDrag();
       }
     }
 
-    function triggerCakeCut() {
-      try { confetti({ particleCount: 80, spread: 80 }); } catch(e){}
-      var cInst = document.getElementById('cakeInstruction');
-      if (cInst) cInst.innerText = "Yummy! Cake is cut! 🎉";
-      var cutBtn = document.getElementById('cakeCutTriggerBtn');
-      if (cutBtn) cutBtn.style.display = 'none';
-      var cBtn = document.getElementById('cakeNextBtn');
-      if (cBtn) cBtn.removeAttribute('disabled');
+    function initKnifeDrag() {
+      var knife = document.getElementById('dragKnife');
+      var track = document.getElementById('cutTrack');
+      var slice = document.getElementById('cakeSlice');
+      var cakeDone = false;
+      var startY = 0;
+
+      function onStart(e) {
+        if (cakeDone) return;
+        startY = e.clientY || (e.touches && e.touches[0].clientY);
+        window.addEventListener('mousemove', onMove);
+        window.addEventListener('touchmove', onMove);
+        window.addEventListener('mouseup', onEnd);
+        window.addEventListener('touchend', onEnd);
+      }
+
+      function onMove(e) {
+        if (cakeDone) return;
+        var currentY = e.clientY || (e.touches && e.touches[0].clientY);
+        var delta = currentY - startY;
+        if (delta < 0) delta = 0;
+        if (delta > 105) delta = 105;
+        knife.style.top = delta + 'px';
+
+        if (delta >= 95 && !cakeDone) {
+          cakeDone = true;
+          slice.classList.add('popped');
+          try { confetti({ particleCount: 75, spread: 75 }); } catch(err){}
+          var cInst = document.getElementById('cakeInstruction');
+          if (cInst) cInst.innerText = "Yummy! Cake slice is cut! 🎉";
+          var nBtn = document.getElementById('cakeNextBtn');
+          if (nBtn) nBtn.removeAttribute('disabled');
+        }
+      }
+
+      function onEnd() {
+        window.removeEventListener('mousemove', onMove);
+        window.removeEventListener('touchmove', onMove);
+        window.removeEventListener('mouseup', onEnd);
+        window.removeEventListener('touchend', onEnd);
+      }
+
+      knife.addEventListener('mousedown', onStart);
+      knife.addEventListener('touchstart', onStart);
     }
 
     function ejectPhoto() {
@@ -1010,7 +1157,7 @@
         if (!isScratching) return;
         var rect = canvas.getBoundingClientRect();
         var clientX = e.clientX || (e.touches && e.touches[0].clientX);
-        var clientY = e.clientY || (e.touches && e.touches[0].clientY);
+                var clientY = e.clientY || (e.touches && e.touches[0].clientY);
         var x = clientX - rect.left;
         var y = clientY - rect.top;
 
