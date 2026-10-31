@@ -308,7 +308,6 @@
     }
     .ejected-photo-slot img { width: 100%; height: 120px; object-fit: cover; }
 
-    /* UN-CROPPED SCRAPBOOK PHOTOS */
     .scrapbook-wall {
       width: 100%;
       height: 480px;
@@ -513,9 +512,7 @@
   <div class="phone-container">
     <button class="music-player-btn" id="musicBtn" onclick="toggleAudio()">🎵</button>
 
-    <audio id="bgSong" loop preload="auto">
-      <source src="Sohnea%20(Full%20Song)%20Miss%20Pooja%20Feat.%20Millind%20Gaba%20Happy%20Raikoti%20Superhit%20Punjabi%20Song%20-%20Speed%20Records.mp3" type="audio/mpeg">
-    </audio>
+    <audio id="bgSong" loop preload="auto" src="Sohnea (Full Song) Miss Pooja Feat. Millind Gaba Happy Raikoti Superhit Punjabi Song - Speed Records.mp3"></audio>
 
     <!-- SCREEN 1: GIFT BOX -->
     <div class="screen active" id="screen1">
@@ -592,7 +589,7 @@
       <button type="button" class="btn-main" id="balloonNextBtn" disabled onclick="goToScreen(4)">Cut The Cake ➔</button>
     </div>
 
-    <!-- SCREEN 4: CAKE CUTTING (FIXED AUTO-CUT) -->
+    <!-- SCREEN 4: CAKE CUTTING -->
     <div class="screen" id="screen4">
       <div>
         <p class="title-script">Make a sweet wish...</p>
@@ -622,10 +619,25 @@
       <button type="button" class="btn-main" id="cakeCutTriggerBtn" style="display:none;" onclick="triggerCakeCut()">🔪 Tap Here to Cut Cake!</button>
       <button type="button" class="btn-main" id="cakeNextBtn" disabled onclick="goToScreen(5)">Capture Memory ➔</button>
     </div>
+
+    <!-- SCREEN 5: CAMERA REVEAL -->
+    <div class="screen" id="screen5">
+      <div>
+        <h2 class="title-serif">Capture a Moment 📷</h2>
+        <p class="subtitle-text">Tap the camera to develop the photo</p>
+      </div>
+
+      <div style="position: relative; margin-top: 15px;">
+        <div class="camera-body" onclick="ejectPhoto()"><div class="camera-lens"></div></div>
+        <div class="ejected-photo-slot" id="ejectedSlot">
+          <img src="IMG-20251218-WA0001.jpg" alt="Anu Terrace Photo" onerror="this.src='1793348229083.png'">
+        </div>
+      </div>
+
+      <div style="height: 120px;"></div>
       <button type="button" class="btn-main" id="camNextBtn" disabled onclick="goToScreen(6)">Beautiful Memories ➔</button>
     </div>
-
-    <!-- SCREEN 6: SCRAPBOOK GALLERY (WHITE SHIRT PHOTO + UNCROPPED) -->
+        <!-- SCREEN 6: SCRAPBOOK GALLERY -->
     <div class="screen" id="screen6">
       <div>
         <p class="title-script">Special Moments</p>
@@ -751,7 +763,7 @@
       <button type="button" class="btn-main" id="scratchNextBtn" disabled onclick="goToScreen(11)">Play Love Reel ➔</button>
     </div>
 
-    <!-- SCREEN 11: CINEMATIC SLIDESHOW (ALL PHOTOS INCLUDED) -->
+    <!-- SCREEN 11: CINEMATIC SLIDESHOW -->
     <div class="screen" id="screen11">
       <div>
         <p class="title-script">Forever & Always</p>
@@ -793,7 +805,9 @@
         bgSong.play().then(function() {
           musicBtn.classList.add('playing');
           isPlaying = true;
-        }).catch(function() {});
+        }).catch(function(err) {
+          console.log("Audio play error: ", err);
+        });
       }
     }
 
