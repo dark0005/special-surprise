@@ -19,14 +19,12 @@
       --text-dark: #3a2e2b;
       --text-muted: #7d6e68;
     }
-
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
       -webkit-tap-highlight-color: transparent;
     }
-
     body {
       background-color: #201716;
       font-family: 'Poppins', sans-serif;
@@ -37,7 +35,6 @@
       min-height: 100vh;
       overflow-x: hidden;
     }
-
     .phone-container {
       width: 100%;
       max-width: 420px;
@@ -52,7 +49,6 @@
       border-radius: 36px;
       border: 8px solid #140f0e;
     }
-
     @media (max-width: 480px) {
       .phone-container {
         height: 100vh;
@@ -61,7 +57,6 @@
         border: none;
       }
     }
-
     .music-player-btn {
       position: absolute;
       top: 16px;
@@ -94,10 +89,9 @@
       z-index: 10;
     }
     .screen.active {
-      display: flex;
+      display: flex !important;
       z-index: 50;
     }
-
     .title-script {
       font-family: 'Sacramento', cursive;
       color: var(--primary-red);
@@ -120,7 +114,6 @@
       text-align: center;
       margin-bottom: 8px;
     }
-
     .btn-main {
       width: 100%;
       max-width: 290px;
@@ -154,7 +147,6 @@
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-12px); }
     }
-
     .polaroid-top {
       background: #fff;
       padding: 8px 8px 24px 8px;
@@ -216,7 +208,6 @@
       justify-content: center;
       margin: 0 auto;
     }
-
     .balloons-area {
       width: 100%;
       height: 300px;
@@ -249,7 +240,6 @@
       text-align: center;
       min-height: 40px;
     }
-
     .cake-wrapper {
       position: relative;
       width: 240px;
@@ -536,7 +526,7 @@
         <p class="subtitle-text">A little birthday surprise awaits 🎀</p>
       </div>
 
-      <div class="gift-box" onclick="nextScreen(2)">
+      <div class="gift-box" onclick="goToScreen(2)">
         <svg viewBox="0 0 200 200" fill="none">
           <rect x="35" y="70" width="130" height="95" rx="8" fill="#9e2837"/>
           <rect x="25" y="55" width="150" height="24" rx="4" fill="#ba3346"/>
@@ -547,7 +537,7 @@
         </svg>
       </div>
 
-      <button type="button" class="btn-main" onclick="nextScreen(2)">Let's Begin ➔</button>
+      <button type="button" class="btn-main" onclick="goToScreen(2)">Let's Begin ➔</button>
     </div>
 
     <!-- SCREEN 2: PASSCODE (0411) -->
@@ -600,7 +590,7 @@
       </div>
 
       <div class="balloon-words" id="balloonMsg"></div>
-      <button type="button" class="btn-main" id="balloonNextBtn" disabled onclick="nextScreen(4)">Cut The Cake ➔</button>
+      <button type="button" class="btn-main" id="balloonNextBtn" disabled onclick="goToScreen(4)">Cut The Cake ➔</button>
     </div>
 
     <!-- SCREEN 4: CAKE CUTTING -->
@@ -634,7 +624,7 @@
         </div>
       </div>
 
-      <button type="button" class="btn-main" id="cakeNextBtn" disabled onclick="nextScreen(5)">Capture Memory ➔</button>
+      <button type="button" class="btn-main" id="cakeNextBtn" disabled onclick="goToScreen(5)">Capture Memory ➔</button>
     </div>
 
     <!-- SCREEN 5: CAMERA REVEAL -->
@@ -652,4 +642,400 @@
       </div>
 
       <div style="height: 120px;"></div>
-      <button
+            <button type="button" class="btn-main" id="camNextBtn" disabled onclick="goToScreen(6)">Beautiful Memories ➔</button>
+    </div>
+
+    <!-- SCREEN 6: SCRAPBOOK GALLERY -->
+    <div class="screen" id="screen6">
+      <div>
+        <p class="title-script">Special Moments</p>
+        <h2 class="title-serif">Our Beautiful Memories ✨</h2>
+        <p class="subtitle-text">Har photo mein basi ek pyari si yaad</p>
+      </div>
+
+      <div class="scrapbook-wall">
+        <div class="scrap-item" style="transform: rotate(-1.5deg);">
+          <img src="1793348229083.png" alt="Bonding">
+          <p class="scrap-caption">Together in every step 🤝</p>
+        </div>
+        <div class="scrap-item" style="transform: rotate(2deg);">
+          <img src="IMG-20260219-WA0046.jpg" alt="Festive Together" onerror="this.src='IMG-20260501-WA0011.jpg'">
+          <p class="scrap-caption">The sweetest festive frame 🌸</p>
+        </div>
+        <div class="scrap-item" style="transform: rotate(-1deg);">
+          <img src="IMG-20260319-WA0002.jpg" alt="Balcony Pair" onerror="this.src='IMG-20260504-WA0000.jpg'">
+          <p class="scrap-caption">Side by side, always ✨</p>
+        </div>
+        <div class="scrap-item" style="transform: rotate(2deg);">
+          <img src="IMG-20260325-WA0022.jpg" alt="Graceful Anu" onerror="this.src='IMG-20260714-WA0030.jpg'">
+          <p class="scrap-caption">Grace & innocent vibes 🕊️</p>
+        </div>
+        <div class="scrap-item" style="transform: rotate(-2deg);">
+          <img src="IMG-20260501-WA0011.jpg" alt="Saree Look" onerror="this.src='IMG-20260828-WA0009.jpg'">
+          <p class="scrap-caption">Effortlessly elegant 💜</p>
+        </div>
+        <div class="scrap-item" style="transform: rotate(1.5deg);">
+          <img src="IMG-20260504-WA0000.jpg" alt="Sunshine Smile" onerror="this.src='IMG_20251205_223806.jpg'">
+          <p class="scrap-caption">A warm sunshine smile ☀️</p>
+        </div>
+      </div>
+
+      <button type="button" class="btn-main" onclick="goToScreen(7)">Secret Letters ➔</button>
+    </div>
+
+    <!-- SCREEN 7: 4 WAX ENVELOPES -->
+    <div class="screen" id="screen7">
+      <div>
+        <p class="title-script">From the Heart</p>
+        <h2 class="title-serif">A Little Letter For Anu 💌</h2>
+        <p class="subtitle-text">Tap each envelope to open</p>
+      </div>
+
+      <div class="envelope-grid">
+        <div class="envelope-card" onclick="openLetter(1)"><div class="wax-seal">❤️</div></div>
+        <div class="envelope-card" onclick="openLetter(2)"><div class="wax-seal">✨</div></div>
+        <div class="envelope-card" onclick="openLetter(3)"><div class="wax-seal">🌸</div></div>
+        <div class="envelope-card" onclick="openLetter(4)"><div class="wax-seal">🕊️</div></div>
+      </div>
+
+      <button type="button" class="btn-main" onclick="goToScreen(8)">Fun Quiz ➔</button>
+    </div>
+
+    <!-- Letter Modal -->
+    <div class="letter-modal" id="letterModal">
+      <div class="letter-card">
+        <span style="position: absolute; top: 10px; right: 14px; font-size: 22px; cursor: pointer;" onclick="closeLetter()">&times;</span>
+        <p class="title-script" id="letterTag">For Anu</p>
+        <p id="letterContent" style="font-family: 'Cormorant Garamond', serif; font-size: 18px; line-height: 1.5; margin: 15px 0;">Message</p>
+        <span style="color: var(--primary-red); font-size: 14px;">With All My Heart ❤️</span>
+      </div>
+    </div>
+
+    <!-- SCREEN 8: QUIZ -->
+    <div class="screen" id="screen8">
+      <div>
+        <p class="title-script">How Well Do You Know?</p>
+        <h2 class="title-serif">Where Did We First Meet? 💫</h2>
+        <p class="subtitle-text">Sahi option chuno bacha!</p>
+      </div>
+
+      <div class="quiz-card">
+        <button type="button" class="quiz-opt" onclick="checkQuiz(this, false)">A) In College / School</button>
+        <button type="button" class="quiz-opt" onclick="checkQuiz(this, false)">B) At a Friend's Party</button>
+        <button type="button" class="quiz-opt" onclick="checkQuiz(this, true)">C) Online 🌐</button>
+        <button type="button" class="quiz-opt" onclick="checkQuiz(this, false)">D) In a Cafe</button>
+      </div>
+
+      <button type="button" class="btn-main" id="quizNextBtn" disabled onclick="goToScreen(9)">Memory Game ➔</button>
+    </div>
+
+    <!-- SCREEN 9: FLIP & MATCH -->
+    <div class="screen" id="screen9">
+      <div>
+        <p class="title-script">Mini Game</p>
+        <h2 class="title-serif">Flip & Match 🃏</h2>
+        <p class="subtitle-text">Match all pairs to reveal your prize</p>
+      </div>
+
+      <div class="memory-grid" id="memoGrid"></div>
+      <button type="button" class="btn-main" id="matchNextBtn" disabled onclick="goToScreen(10)">Scratch Surprise ➔</button>
+    </div>
+
+    <!-- SCREEN 10: SCRATCH CARD -->
+    <div class="screen" id="screen10">
+      <div>
+        <p class="title-script">It's Your Birthday!</p>
+        <h2 class="title-serif">Scratch Your Surprise 🎁</h2>
+        <p class="subtitle-text">Scratch to reveal a special note for you</p>
+      </div>
+
+      <div class="scratch-container">
+        <div class="scratch-underlay">
+          <img src="IMG-20260714-WA0030.jpg" alt="Anu Sweet Smile" onerror="this.src='1793348229083.png'">
+          <p class="scratch-shayari">
+            "Khuda ne agar mohobbat ka chahera bnata<br>
+            toh tumse milta julta bnata ♥️"
+          </p>
+        </div>
+        <canvas id="scratchCanvas" width="255" height="255"></canvas>
+      </div>
+
+      <button type="button" class="btn-main" id="scratchNextBtn" disabled onclick="goToScreen(11)">Play Love Reel ➔</button>
+    </div>
+
+    <!-- SCREEN 11: CINEMATIC SLIDESHOW -->
+    <div class="screen" id="screen11">
+      <div>
+        <p class="title-script">Forever & Always</p>
+        <h2 class="title-serif">Happy Birthday, Anu! ❤️</h2>
+      </div>
+
+      <div class="video-reel-frame">
+        <img src="IMG-20260828-WA0009.jpg" class="slide-photo active" id="slide0" onerror="this.src='1793348229083.png'">
+        <img src="IMG_20251205_223806.jpg" class="slide-photo" id="slide1" onerror="this.src='1793348229083.png'">
+        <img src="IMG_20261030_135722.jpg" class="slide-photo" id="slide2" onerror="this.src='1793348229083.png'">
+
+        <div class="reel-overlay">
+          <p class="title-script" style="color: #ffb7bf; font-size: 26px;">For My Dearest Anu</p>
+          <p style="font-size: 13px; font-weight: 300; opacity: 0.95;">
+            "Enna karda tu pyar bhi ni karda..." Har saal tumhari zindagi mein muskurahat aur khushiyan barkarar rahein! 🌹
+          </p>
+        </div>
+      </div>
+
+      <button type="button" class="btn-main" onclick="location.reload()">Replay Surprise 🔄</button>
+    </div>
+
+  </div>
+
+  <script>
+    function goToScreen(n) {
+      var all = document.getElementsByClassName('screen');
+      for (var i = 0; i < all.length; i++) {
+        all[i].classList.remove('active');
+      }
+      var target = document.getElementById('screen' + n);
+      if (target) {
+        target.classList.add('active');
+      }
+      if (n === 10) initScratch();
+      if (n === 11) startSlideshow();
+    }
+
+    var isPlaying = false;
+    var bgSong = document.getElementById('bgSong');
+    var musicBtn = document.getElementById('musicBtn');
+    function toggleAudio() {
+      if (isPlaying) {
+        bgSong.pause();
+        musicBtn.classList.remove('playing');
+        isPlaying = false;
+      } else {
+        bgSong.play().catch(function() {});
+        musicBtn.classList.add('playing');
+        isPlaying = true;
+      }
+    }
+
+    var enteredCode = "";
+    function pressKey(num) {
+      if (enteredCode.length < 4) {
+        enteredCode += num;
+        updateDots();
+      }
+      if (enteredCode.length === 4) {
+        setTimeout(submitPasscode, 200);
+      }
+    }
+    function clearKeys() {
+      enteredCode = enteredCode.slice(0, -1);
+      updateDots();
+    }
+    function updateDots() {
+      var dots = document.querySelectorAll('#dotsContainer .code-dot');
+      dots.forEach(function(dot, idx) {
+        if (idx < enteredCode.length) dot.classList.add('filled');
+        else dot.classList.remove('filled');
+      });
+    }
+    function submitPasscode() {
+      if (enteredCode === "0411") {
+        try { confetti({ particleCount: 60, spread: 60 }); } catch(e){}
+        goToScreen(3);
+        if (!isPlaying) toggleAudio();
+      } else {
+        alert("Oops! Secret code 0411 hai ❤️");
+        enteredCode = "";
+        updateDots();
+      }
+    }
+
+    var popped = 0;
+    function popBalloon(el, word) {
+      if (el.style.visibility === 'hidden') return;
+      el.style.visibility = 'hidden';
+      popped++;
+      var bMsg = document.getElementById('balloonMsg');
+      if (bMsg) bMsg.innerText += " " + word;
+      try { confetti({ particleCount: 25, spread: 50, origin: { y: 0.6 } }); } catch(e){}
+      if (popped >= 4) {
+        var bBtn = document.getElementById('balloonNextBtn');
+        if (bBtn) bBtn.removeAttribute('disabled');
+      }
+    }
+
+    var blownFlames = 0;
+    function blowFlame(f) {
+      if (f.classList.contains('off')) return;
+      f.classList.add('off');
+      blownFlames++;
+      if (blownFlames >= 3) {
+        var cInst = document.getElementById('cakeInstruction');
+        if (cInst) cInst.innerText = "Wish Granted! Tap knife to cut cake 🍰";
+        var kLine = document.getElementById('knifeLine');
+        if (kLine) kLine.style.display = 'flex';
+      }
+    }
+    function cutCakeAuto() {
+      var knife = document.getElementById('knifeIcon');
+      if (knife) knife.style.left = '70%';
+      setTimeout(function() {
+        try { confetti({ particleCount: 70, spread: 70 }); } catch(e){}
+        var cInst = document.getElementById('cakeInstruction');
+        if (cInst) cInst.innerText = "Sweetness ahead! Cake is cut! 🎉";
+        var cBtn = document.getElementById('cakeNextBtn');
+        if (cBtn) cBtn.removeAttribute('disabled');
+      }, 300);
+    }
+
+    function ejectPhoto() {
+      var slot = document.getElementById('ejectedSlot');
+      if (slot) slot.classList.add('ejected');
+      try { confetti({ particleCount: 40, spread: 55 }); } catch(e){}
+      setTimeout(function() {
+        var cmBtn = document.getElementById('camNextBtn');
+        if (cmBtn) cmBtn.removeAttribute('disabled');
+      }, 900);
+    }
+
+    var letters = {
+      1: { tag: "Just So You Know", text: "Anu, tumhari muskurahat kisi bhi aam din ko bohot khubsoorat bana deti hai. Hamesha aise hi khush rehna! 🌸" },
+      2: { tag: "A Little Secret", text: "Tumhare is din ke liye bohot pehle se intezaar tha. You deserve every bit of happiness today and always." },
+      3: { tag: "Dua For You", text: "Khuda kare aane wala saal tumhari zindagi mein sukoon, kamiyabi aur dher saari khushiyan lekar aaye." },
+      4: { tag: "Most Of All", text: "Tumhara hona hi bohot khaas hai. Happy Birthday Bacha, with all my love! ❤️" }
+    };
+    function openLetter(id) {
+      var modal = document.getElementById('letterModal');
+      var lTag = document.getElementById('letterTag');
+      var lContent = document.getElementById('letterContent');
+      if (lTag) lTag.innerText = letters[id].tag;
+      if (lContent) lContent.innerText = letters[id].text;
+      if (modal) modal.style.display = 'flex';
+    }
+    function closeLetter() {
+      var modal = document.getElementById('letterModal');
+      if (modal) modal.style.display = 'none';
+    }
+
+    function checkQuiz(btn, isCorrect) {
+      document.querySelectorAll('.quiz-opt').forEach(function(b) { b.classList.remove('correct'); });
+      if (isCorrect) {
+        btn.classList.add('correct');
+        try { confetti({ particleCount: 50, spread: 60 }); } catch(e){}
+        var qBtn = document.getElementById('quizNextBtn');
+        if (qBtn) qBtn.removeAttribute('disabled');
+      } else {
+        btn.style.background = "#f8d7da";
+        btn.style.borderColor = "#f5c6cb";
+      }
+    }
+
+    var icons = ['🍰', '🎈', '💌', '🌸', '🍰', '🎈', '💌', '🌸'];
+    var flipped = [];
+    var matched = 0;
+    function initMemoryGrid() {
+      var grid = document.getElementById('memoGrid');
+      if (!grid) return;
+      grid.innerHTML = '';
+      var shuffled = icons.sort(function() { return 0.5 - Math.random(); });
+      shuffled.forEach(function(sym) {
+        var c = document.createElement('div');
+        c.className = 'memo-card';
+        c.dataset.sym = sym;
+        c.innerHTML = '✨';
+        c.onclick = function() {
+          if (c.classList.contains('flipped') || c.classList.contains('matched') || flipped.length === 2) return;
+          c.classList.add('flipped');
+          c.innerHTML = sym;
+          flipped.push(c);
+          if (flipped.length === 2) {
+            if (flipped[0].dataset.sym === flipped[1].dataset.sym) {
+              flipped.forEach(function(card) { card.classList.add('matched'); });
+              matched++;
+              flipped = [];
+              if (matched === 4) {
+                try { confetti({ particleCount: 60, spread: 70 }); } catch(e){}
+                var mBtn = document.getElementById('matchNextBtn');
+                if (mBtn) mBtn.removeAttribute('disabled');
+              }
+            } else {
+              setTimeout(function() {
+                flipped.forEach(function(card) {
+                  card.classList.remove('flipped');
+                  card.innerHTML = '✨';
+                });
+                flipped = [];
+              }, 600);
+            }
+          }
+        };
+        grid.appendChild(c);
+      });
+    }
+    initMemoryGrid();
+
+    var scratchReady = false;
+    function initScratch() {
+      if (scratchReady) return;
+      scratchReady = true;
+      var canvas = document.getElementById('scratchCanvas');
+      if (!canvas) return;
+      var ctx = canvas.getContext('2d');
+
+      ctx.fillStyle = '#c5a059';
+      ctx.fillRect(0, 0, 255, 255);
+      ctx.fillStyle = '#8d2836';
+      ctx.font = 'bold 16px Playfair Display';
+      ctx.textAlign = 'center';
+      ctx.fillText('Scratch for Anu ❤️', 127, 130);
+
+      var isScratching = false;
+      var count = 0;
+      function doScratch(e) {
+        if (!isScratching) return;
+        var rect = canvas.getBoundingClientRect();
+        var clientX = e.clientX || (e.touches && e.touches[0].clientX);
+        var clientY = e.clientY || (e.touches && e.touches[0].clientY);
+        var x = clientX - rect.left;
+        var y = clientY - rect.top;
+
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.beginPath();
+        ctx.arc(x, y, 22, 0, Math.PI * 2);
+        ctx.fill();
+
+        count++;
+        if (count > 40) {
+          var sBtn = document.getElementById('scratchNextBtn');
+          if (sBtn) sBtn.removeAttribute('disabled');
+        }
+      }
+
+      canvas.addEventListener('mousedown', function() { isScratching = true; });
+      canvas.addEventListener('mouseup', function() { isScratching = false; });
+      canvas.addEventListener('mousemove', doScratch);
+      canvas.addEventListener('touchstart', function() { isScratching = true; });
+      canvas.addEventListener('touchend', function() { isScratching = false; });
+      canvas.addEventListener('touchmove', doScratch);
+    }
+
+    var slideIndex = 0;
+    function startSlideshow() {
+      try { confetti({ particleCount: 80, spread: 90, origin: { y: 0.4 } }); } catch(e){}
+      var slides = [
+        document.getElementById('slide0'),
+        document.getElementById('slide1'),
+        document.getElementById('slide2')
+      ];
+
+      setInterval(function() {
+        var cur = slides[slideIndex];
+        if (cur) cur.classList.remove('active');
+        slideIndex = (slideIndex + 1) % slides.length;
+        var nxt = slides[slideIndex];
+        if (nxt) nxt.classList.add('active');
+      }, 3500);
+    }
+  </script>
+</body>
+</html>
