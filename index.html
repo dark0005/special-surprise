@@ -240,16 +240,18 @@
       text-align: center;
       min-height: 40px;
     }
+
     .cake-wrapper {
       position: relative;
       width: 240px;
       height: 220px;
       margin: 10px auto;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
     }
-    .candle-flames { position: absolute; top: 24px; display: flex; gap: 22px; }
+    .candle-flames { position: absolute; top: 15px; display: flex; gap: 22px; }
     .flame {
       width: 12px;
       height: 18px;
@@ -261,18 +263,6 @@
     }
     .flame.off { display: none; }
     @keyframes flick { 0% { transform: scale(1); } 100% { transform: scale(1.15); } }
-    .knife-drag-line {
-      position: absolute;
-      top: 58%;
-      left: 10%;
-      width: 80%;
-      height: 35px;
-      border-bottom: 2px dashed var(--primary-red);
-      display: none;
-      align-items: center;
-      cursor: pointer;
-    }
-    .knife-icon { font-size: 20px; position: absolute; left: 0; transition: left 0.4s; font-weight: 600; color: var(--primary-maroon); }
 
     .camera-body {
       width: 195px;
@@ -318,6 +308,7 @@
     }
     .ejected-photo-slot img { width: 100%; height: 120px; object-fit: cover; }
 
+    /* UN-CROPPED SCRAPBOOK PHOTOS */
     .scrapbook-wall {
       width: 100%;
       height: 480px;
@@ -330,17 +321,24 @@
     }
     .scrap-item {
       background: #fff;
-      padding: 10px 10px 22px 10px;
-      border-radius: 5px;
+      padding: 10px 10px 20px 10px;
+      border-radius: 8px;
       box-shadow: 0 8px 18px rgba(0,0,0,0.1);
-      width: 90%;
+      width: 92%;
     }
-    .scrap-item img { width: 100%; height: 230px; object-fit: cover; border-radius: 3px; }
+    .scrap-item img {
+      width: 100%;
+      height: auto;
+      max-height: 360px;
+      object-fit: contain;
+      border-radius: 4px;
+      background: #fafafa;
+    }
     .scrap-caption {
       font-family: 'Sacramento', cursive;
-      font-size: 20px;
+      font-size: 22px;
       text-align: center;
-      margin-top: 6px;
+      margin-top: 8px;
       color: var(--primary-maroon);
     }
 
@@ -492,10 +490,11 @@
       inset: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
+      background: #111;
       opacity: 0;
-      transform: scale(1.06);
-      transition: all 1.8s ease-in-out;
+      transform: scale(1.05);
+      transition: all 1.5s ease-in-out;
     }
     .slide-photo.active { opacity: 1; transform: scale(1); }
     .reel-overlay {
@@ -515,7 +514,7 @@
     <button class="music-player-btn" id="musicBtn" onclick="toggleAudio()">🎵</button>
 
     <audio id="bgSong" loop preload="auto">
-      <source src="Sohnea (Full Song) Miss Pooja Feat. Millind Gaba Happy Raikoti Superhit Punjabi Song - Speed Records.mp3" type="audio/mpeg">
+      <source src="Sohnea%20(Full%20Song)%20Miss%20Pooja%20Feat.%20Millind%20Gaba%20Happy%20Raikoti%20Superhit%20Punjabi%20Song%20-%20Speed%20Records.mp3" type="audio/mpeg">
     </audio>
 
     <!-- SCREEN 1: GIFT BOX -->
@@ -593,7 +592,7 @@
       <button type="button" class="btn-main" id="balloonNextBtn" disabled onclick="goToScreen(4)">Cut The Cake ➔</button>
     </div>
 
-    <!-- SCREEN 4: CAKE CUTTING -->
+    <!-- SCREEN 4: CAKE CUTTING (FIXED AUTO-CUT) -->
     <div class="screen" id="screen4">
       <div>
         <p class="title-script">Make a sweet wish...</p>
@@ -618,34 +617,15 @@
           <div class="flame" onclick="blowFlame(this)"></div>
           <div class="flame" onclick="blowFlame(this)"></div>
         </div>
-
-        <div class="knife-drag-line" id="knifeLine" onclick="cutCakeAuto()">
-          <span class="knife-icon" id="knifeIcon">🔪 Tap to cut!</span>
-        </div>
       </div>
 
+      <button type="button" class="btn-main" id="cakeCutTriggerBtn" style="display:none;" onclick="triggerCakeCut()">🔪 Tap Here to Cut Cake!</button>
       <button type="button" class="btn-main" id="cakeNextBtn" disabled onclick="goToScreen(5)">Capture Memory ➔</button>
     </div>
-
-    <!-- SCREEN 5: CAMERA REVEAL -->
-    <div class="screen" id="screen5">
-      <div>
-        <h2 class="title-serif">Capture a Moment 📷</h2>
-        <p class="subtitle-text">Tap the camera to develop the photo</p>
-      </div>
-
-      <div style="position: relative; margin-top: 15px;">
-        <div class="camera-body" onclick="ejectPhoto()"><div class="camera-lens"></div></div>
-        <div class="ejected-photo-slot" id="ejectedSlot">
-          <img src="IMG-20251218-WA0001.jpg" alt="Anu Terrace Photo" onerror="this.src='1793348229083.png'">
-        </div>
-      </div>
-
-      <div style="height: 120px;"></div>
-            <button type="button" class="btn-main" id="camNextBtn" disabled onclick="goToScreen(6)">Beautiful Memories ➔</button>
+      <button type="button" class="btn-main" id="camNextBtn" disabled onclick="goToScreen(6)">Beautiful Memories ➔</button>
     </div>
 
-    <!-- SCREEN 6: SCRAPBOOK GALLERY -->
+    <!-- SCREEN 6: SCRAPBOOK GALLERY (WHITE SHIRT PHOTO + UNCROPPED) -->
     <div class="screen" id="screen6">
       <div>
         <p class="title-script">Special Moments</p>
@@ -654,27 +634,35 @@
       </div>
 
       <div class="scrapbook-wall">
-        <div class="scrap-item" style="transform: rotate(-1.5deg);">
-          <img src="1793348229083.png" alt="Bonding">
+        <!-- White Shirt Photo Added -->
+        <div class="scrap-item" style="transform: rotate(-1deg);">
+          <img src="file_000000008e0482118a72021cfe78b87f.png" alt="Together White Shirt">
+          <p class="scrap-caption">The favorite frame ✨</p>
+        </div>
+
+        <!-- Pink Kurta Kurti Photo (Full Frame) -->
+        <div class="scrap-item" style="transform: rotate(1deg);">
+          <img src="1793348229083.png" alt="Together in Ethnic">
           <p class="scrap-caption">Together in every step 🤝</p>
         </div>
-        <div class="scrap-item" style="transform: rotate(2deg);">
+
+        <div class="scrap-item" style="transform: rotate(-1.5deg);">
           <img src="IMG-20260219-WA0046.jpg" alt="Festive Together" onerror="this.src='IMG-20260501-WA0011.jpg'">
           <p class="scrap-caption">The sweetest festive frame 🌸</p>
         </div>
-        <div class="scrap-item" style="transform: rotate(-1deg);">
+        <div class="scrap-item" style="transform: rotate(1.5deg);">
           <img src="IMG-20260319-WA0002.jpg" alt="Balcony Pair" onerror="this.src='IMG-20260504-WA0000.jpg'">
           <p class="scrap-caption">Side by side, always ✨</p>
         </div>
-        <div class="scrap-item" style="transform: rotate(2deg);">
+        <div class="scrap-item" style="transform: rotate(-1deg);">
           <img src="IMG-20260325-WA0022.jpg" alt="Graceful Anu" onerror="this.src='IMG-20260714-WA0030.jpg'">
           <p class="scrap-caption">Grace & innocent vibes 🕊️</p>
         </div>
-        <div class="scrap-item" style="transform: rotate(-2deg);">
+        <div class="scrap-item" style="transform: rotate(1deg);">
           <img src="IMG-20260501-WA0011.jpg" alt="Saree Look" onerror="this.src='IMG-20260828-WA0009.jpg'">
           <p class="scrap-caption">Effortlessly elegant 💜</p>
         </div>
-        <div class="scrap-item" style="transform: rotate(1.5deg);">
+        <div class="scrap-item" style="transform: rotate(-1.5deg);">
           <img src="IMG-20260504-WA0000.jpg" alt="Sunshine Smile" onerror="this.src='IMG_20251205_223806.jpg'">
           <p class="scrap-caption">A warm sunshine smile ☀️</p>
         </div>
@@ -763,7 +751,7 @@
       <button type="button" class="btn-main" id="scratchNextBtn" disabled onclick="goToScreen(11)">Play Love Reel ➔</button>
     </div>
 
-    <!-- SCREEN 11: CINEMATIC SLIDESHOW -->
+    <!-- SCREEN 11: CINEMATIC SLIDESHOW (ALL PHOTOS INCLUDED) -->
     <div class="screen" id="screen11">
       <div>
         <p class="title-script">Forever & Always</p>
@@ -771,9 +759,11 @@
       </div>
 
       <div class="video-reel-frame">
-        <img src="IMG-20260828-WA0009.jpg" class="slide-photo active" id="slide0" onerror="this.src='1793348229083.png'">
-        <img src="IMG_20251205_223806.jpg" class="slide-photo" id="slide1" onerror="this.src='1793348229083.png'">
-        <img src="IMG_20261030_135722.jpg" class="slide-photo" id="slide2" onerror="this.src='1793348229083.png'">
+        <img src="file_000000008e0482118a72021cfe78b87f.png" class="slide-photo active" id="slide0">
+        <img src="1793348229083.png" class="slide-photo" id="slide1">
+        <img src="IMG-20260828-WA0009.jpg" class="slide-photo" id="slide2" onerror="this.src='1793348229083.png'">
+        <img src="IMG_20251205_223806.jpg" class="slide-photo" id="slide3" onerror="this.src='1793348229083.png'">
+        <img src="IMG_20261030_135722.jpg" class="slide-photo" id="slide4" onerror="this.src='1793348229083.png'">
 
         <div class="reel-overlay">
           <p class="title-script" style="color: #ffb7bf; font-size: 26px;">For My Dearest Anu</p>
@@ -789,7 +779,35 @@
   </div>
 
   <script>
+    var isPlaying = false;
+    var bgSong = document.getElementById('bgSong');
+    var musicBtn = document.getElementById('musicBtn');
+
+    function toggleAudio() {
+      if (!bgSong) return;
+      if (isPlaying) {
+        bgSong.pause();
+        musicBtn.classList.remove('playing');
+        isPlaying = false;
+      } else {
+        bgSong.play().then(function() {
+          musicBtn.classList.add('playing');
+          isPlaying = true;
+        }).catch(function() {});
+      }
+    }
+
+    function startMusicForce() {
+      if (!isPlaying && bgSong) {
+        bgSong.play().then(function() {
+          musicBtn.classList.add('playing');
+          isPlaying = true;
+        }).catch(function() {});
+      }
+    }
+
     function goToScreen(n) {
+      startMusicForce();
       var all = document.getElementsByClassName('screen');
       for (var i = 0; i < all.length; i++) {
         all[i].classList.remove('active');
@@ -800,21 +818,6 @@
       }
       if (n === 10) initScratch();
       if (n === 11) startSlideshow();
-    }
-
-    var isPlaying = false;
-    var bgSong = document.getElementById('bgSong');
-    var musicBtn = document.getElementById('musicBtn');
-    function toggleAudio() {
-      if (isPlaying) {
-        bgSong.pause();
-        musicBtn.classList.remove('playing');
-        isPlaying = false;
-      } else {
-        bgSong.play().catch(function() {});
-        musicBtn.classList.add('playing');
-        isPlaying = true;
-      }
     }
 
     var enteredCode = "";
@@ -842,7 +845,6 @@
       if (enteredCode === "0411") {
         try { confetti({ particleCount: 60, spread: 60 }); } catch(e){}
         goToScreen(3);
-        if (!isPlaying) toggleAudio();
       } else {
         alert("Oops! Secret code 0411 hai ❤️");
         enteredCode = "";
@@ -871,21 +873,20 @@
       blownFlames++;
       if (blownFlames >= 3) {
         var cInst = document.getElementById('cakeInstruction');
-        if (cInst) cInst.innerText = "Wish Granted! Tap knife to cut cake 🍰";
-        var kLine = document.getElementById('knifeLine');
-        if (kLine) kLine.style.display = 'flex';
+        if (cInst) cInst.innerText = "Wish Granted! Ab neeche cake cut karo 🍰";
+        var cutBtn = document.getElementById('cakeCutTriggerBtn');
+        if (cutBtn) cutBtn.style.display = 'flex';
       }
     }
-    function cutCakeAuto() {
-      var knife = document.getElementById('knifeIcon');
-      if (knife) knife.style.left = '70%';
-      setTimeout(function() {
-        try { confetti({ particleCount: 70, spread: 70 }); } catch(e){}
-        var cInst = document.getElementById('cakeInstruction');
-        if (cInst) cInst.innerText = "Sweetness ahead! Cake is cut! 🎉";
-        var cBtn = document.getElementById('cakeNextBtn');
-        if (cBtn) cBtn.removeAttribute('disabled');
-      }, 300);
+
+    function triggerCakeCut() {
+      try { confetti({ particleCount: 80, spread: 80 }); } catch(e){}
+      var cInst = document.getElementById('cakeInstruction');
+      if (cInst) cInst.innerText = "Yummy! Cake is cut! 🎉";
+      var cutBtn = document.getElementById('cakeCutTriggerBtn');
+      if (cutBtn) cutBtn.style.display = 'none';
+      var cBtn = document.getElementById('cakeNextBtn');
+      if (cBtn) cBtn.removeAttribute('disabled');
     }
 
     function ejectPhoto() {
@@ -1025,7 +1026,9 @@
       var slides = [
         document.getElementById('slide0'),
         document.getElementById('slide1'),
-        document.getElementById('slide2')
+        document.getElementById('slide2'),
+        document.getElementById('slide3'),
+        document.getElementById('slide4')
       ];
 
       setInterval(function() {
